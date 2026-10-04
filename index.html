@@ -1,0 +1,3576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Aman World Explorer | Premium Travel</title>
+
+<meta name="description"
+content="Explore the world's countries and discover amazing destinations with World Explorer.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Inter",sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%,rgba(0,229,255,.12),transparent 25%),
+        radial-gradient(circle at 90% 20%,rgba(130,80,255,.12),transparent 25%),
+        radial-gradient(circle at 50% 90%,rgba(0,255,170,.07),transparent 30%),
+        #03050b;
+    color:white;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* FUTURISTIC BACKGROUND */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-2;
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:50px 50px;
+    mask-image:linear-gradient(to bottom,black,transparent);
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:#00e5ff;
+    filter:blur(180px);
+    opacity:.06;
+    top:-200px;
+    right:-150px;
+    pointer-events:none;
+}
+
+/* HEADER */
+
+header{
+    min-height:520px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:60px 20px 80px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.heroGlow{
+    position:absolute;
+    width:650px;
+    height:650px;
+    border-radius:50%;
+    background:
+        radial-gradient(circle,
+        rgba(0,229,255,.18),
+        rgba(120,60,255,.08) 35%,
+        transparent 70%);
+    animation:heroPulse 5s ease-in-out infinite;
+}
+
+@keyframes heroPulse{
+    0%,100%{transform:scale(.95);opacity:.7}
+    50%{transform:scale(1.08);opacity:1}
+}
+
+.badge{
+    position:relative;
+    z-index:2;
+    padding:9px 18px;
+    border:1px solid rgba(0,229,255,.35);
+    background:rgba(0,229,255,.07);
+    border-radius:50px;
+    color:#7eefff;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    backdrop-filter:blur(15px);
+    box-shadow:0 0 30px rgba(0,229,255,.12);
+    margin-bottom:25px;
+}
+
+header h1{
+    position:relative;
+    z-index:2;
+    font-family:"Orbitron",sans-serif;
+    font-size:clamp(42px,8vw,90px);
+    font-weight:800;
+    letter-spacing:-3px;
+    line-height:1;
+    background:linear-gradient(
+        90deg,
+        #ffffff,
+        #8ff5ff,
+        #ffffff,
+        #b59cff
+    );
+    background-size:250% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:gradientMove 5s linear infinite;
+    text-shadow:0 0 50px rgba(0,229,255,.15);
+}
+
+@keyframes gradientMove{
+    to{background-position:250% center}
+}
+
+.heroText{
+    position:relative;
+    z-index:2;
+    margin-top:25px;
+    max-width:720px;
+    color:#a9b5c7;
+    font-size:17px;
+    line-height:1.7;
+}
+
+.heroStats{
+    position:relative;
+    z-index:2;
+    display:flex;
+    gap:35px;
+    margin-top:38px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-family:"Orbitron",sans-serif;
+    font-size:25px;
+    color:#fff;
+}
+
+.stat span{
+    color:#778399;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+}
+
+/* SEARCH */
+
+.searchArea{
+    position:relative;
+    z-index:10;
+    max-width:900px;
+    margin:-34px auto 50px;
+    padding:0 20px;
+}
+
+.searchBox{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:7px;
+    border-radius:20px;
+    background:rgba(12,17,29,.78);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(25px);
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.45),
+        0 0 40px rgba(0,229,255,.06);
+}
+
+.searchIcon{
+    width:52px;
+    height:52px;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+    color:#7eefff;
+}
+
+#search{
+    flex:1;
+    border:none;
+    outline:none;
+    background:transparent;
+    color:white;
+    font-size:16px;
+    padding:16px 5px;
+}
+
+#search::placeholder{
+    color:#657084;
+}
+
+/* MAIN */
+
+main{
+    width:min(1450px,92%);
+    margin:auto;
+}
+
+.sectionHeading{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.sectionHeading h2{
+    font-family:"Orbitron",sans-serif;
+    font-size:25px;
+    letter-spacing:1px;
+}
+
+.sectionHeading p{
+    color:#6d788a;
+    font-size:13px;
+}
+
+/* COUNTRY GRID */
+
+.countries{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    gap:18px;
+    padding-bottom:70px;
+}
+
+.countryCard{
+    position:relative;
+    min-height:150px;
+    padding:23px;
+    border-radius:22px;
+    overflow:hidden;
+    cursor:pointer;
+    background:
+        linear-gradient(145deg,
+        rgba(255,255,255,.075),
+        rgba(255,255,255,.025));
+    border:1px solid rgba(255,255,255,.09);
+    backdrop-filter:blur(18px);
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+.countryCard::before{
+    content:"";
+    position:absolute;
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:#00e5ff;
+    filter:blur(70px);
+    opacity:0;
+    right:-50px;
+    bottom:-70px;
+    transition:.4s;
+}
+
+.countryCard:hover{
+    transform:translateY(-8px) scale(1.015);
+    border-color:rgba(0,229,255,.45);
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.4),
+        0 0 35px rgba(0,229,255,.1);
+}
+
+.countryCard:hover::before{
+    opacity:.15;
+}
+
+.flag{
+    font-size:38px;
+    margin-bottom:17px;
+    display:block;
+}
+
+.countryName{
+    font-size:16px;
+    font-weight:700;
+    position:relative;
+    z-index:2;
+}
+
+.countryExplore{
+    margin-top:8px;
+    color:#667386;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.arrow{
+    position:absolute;
+    right:18px;
+    bottom:18px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:rgba(255,255,255,.06);
+    color:#80efff;
+    transition:.3s;
+}
+
+.countryCard:hover .arrow{
+    transform:translateX(4px);
+    background:rgba(0,229,255,.13);
+}
+
+/* DESTINATION PAGE */
+
+#destinations{
+    display:none;
+    padding-bottom:80px;
+}
+
+.destinationTop{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:30px;
+    padding:25px 0;
+}
+
+.countryTitle{
+    font-family:"Orbitron",sans-serif;
+    font-size:clamp(27px,5vw,48px);
+}
+
+.countryTitle span{
+    color:#7eefff;
+}
+
+.back{
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.05);
+    color:#cbd5e1;
+    padding:12px 18px;
+    border-radius:13px;
+    cursor:pointer;
+    transition:.3s;
+    font-weight:600;
+}
+
+.back:hover{
+    background:rgba(0,229,255,.1);
+    border-color:rgba(0,229,255,.4);
+    color:#fff;
+}
+
+.destinationGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.destinationCard{
+    position:relative;
+    min-height:350px;
+    border-radius:24px;
+    overflow:hidden;
+    background:#0a0e17;
+    border:1px solid rgba(255,255,255,.1);
+    cursor:pointer;
+    box-shadow:0 15px 45px rgba(0,0,0,.3);
+    transition:.4s ease;
+}
+
+.destinationCard:hover{
+    transform:translateY(-8px);
+    border-color:rgba(0,229,255,.35);
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.5),
+        0 0 35px rgba(0,229,255,.08);
+}
+
+.destinationCard img{
+    width:100%;
+    height:100%;
+    min-height:350px;
+    object-fit:cover;
+    display:block;
+    transition:transform .7s ease,filter .5s ease;
+}
+
+.destinationCard:hover img{
+    transform:scale(1.08);
+    filter:brightness(.82);
+}
+
+.destinationOverlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:23px;
+    background:
+        linear-gradient(
+        to top,
+        rgba(0,0,0,.9),
+        rgba(0,0,0,.2) 55%,
+        transparent 75%);
+}
+
+.destinationNumber{
+    color:#7eefff;
+    font-family:"Orbitron",sans-serif;
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:8px;
+}
+
+.destinationName{
+    font-size:20px;
+    font-weight:800;
+}
+
+.destinationLocation{
+    color:#aab5c5;
+    font-size:12px;
+    margin-top:6px;
+}
+
+/* LOADING */
+
+.loading{
+    display:none;
+    min-height:300px;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:18px;
+    color:#8995a7;
+}
+
+.loader{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.08);
+    border-top-color:#00e5ff;
+    border-right-color:#9c6cff;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+/* NO RESULTS */
+
+.noResults{
+    grid-column:1/-1;
+    text-align:center;
+    padding:70px 20px;
+    color:#697587;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:50px;
+    padding:45px 20px;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,.07);
+    color:#5e6a7c;
+    font-size:12px;
+}
+
+.footerLogo{
+    font-family:"Orbitron",sans-serif;
+    color:#8cefff;
+    letter-spacing:2px;
+    margin-bottom:10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+    .destinationGrid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:650px){
+
+    header{
+        min-height:470px;
+        padding-top:40px;
+    }
+
+    header h1{
+        font-size:42px;
+        letter-spacing:-2px;
+    }
+
+    .heroText{
+        font-size:14px;
+    }
+
+    .heroStats{
+        gap:20px;
+    }
+
+    .searchArea{
+        margin-top:-27px;
+    }
+
+    .countries{
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+    }
+
+    .countryCard{
+        min-height:135px;
+        padding:17px;
+        border-radius:18px;
+    }
+
+    .flag{
+        font-size:30px;
+        margin-bottom:12px;
+    }
+
+    .countryName{
+        font-size:14px;
+    }
+
+    .destinationGrid{
+        grid-template-columns:1fr;
+    }
+
+    .destinationTop{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .destinationCard,
+    .destinationCard img{
+        min-height:310px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="heroGlow"></div>
+
+    <div class="badge">
+        ✦ PREMIUM GLOBAL TRAVEL EXPERIENCE
+    </div>
+
+    <h1>WORLD EXPLORER</h1>
+
+    <p class="heroText">
+        Discover breathtaking destinations across the planet.
+        Explore countries, iconic landmarks, hidden gems and unforgettable places
+        through a futuristic travel experience.
+    </p>
+
+    <div class="heroStats">
+
+        <div class="stat">
+            <strong id="countryCount">100+</strong>
+            <span>Countries</span>
+        </div>
+
+        <div class="stat">
+            <strong>1500+</strong>
+            <span>Destinations</span>
+        </div>
+
+        <div class="stat">
+            <strong>∞</strong>
+            <span>Adventures</span>
+        </div>
+
+    </div>
+
+</header>
+
+
+<div class="searchArea">
+
+    <div class="searchBox">
+
+        <div class="searchIcon">⌕</div>
+
+        <input
+            id="search"
+            type="text"
+            placeholder="Search a country..."
+            oninput="searchCountries()"
+            autocomplete="off"
+        >
+
+    </div>
+
+</div>
+
+
+<main>
+
+    <!-- COUNTRY SECTION -->
+
+    <section id="countrySection">
+
+        <div class="sectionHeading">
+
+            <div>
+                <h2>Explore the World</h2>
+                <p>Choose a country to discover its destinations</p>
+            </div>
+
+            <p id="resultCount"></p>
+
+        </div>
+
+        <div class="countries" id="countries"></div>
+
+    </section>
+
+
+    <!-- DESTINATION SECTION -->
+
+    <section id="destinations">
+
+        <div class="destinationTop">
+
+            <h2 class="countryTitle" id="countryTitle"></h2>
+
+            <button class="back" onclick="backToCountries()">
+                ← All Countries
+            </button>
+
+        </div>
+
+        <div class="loading" id="loading">
+
+            <div class="loader"></div>
+
+            <div>Discovering amazing destinations...</div>
+
+        </div>
+
+        <div
+            class="destinationGrid"
+            id="destinationGrid">
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="footerLogo">
+        WORLD EXPLORER
+    </div>
+
+    <div>
+        Explore • Discover • Experience
+    </div>
+
+    <br>
+
+    <div>
+        © 2026 World Explorer
+    </div>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   COUNTRY DATA
+   Keep your existing 100-country / 15-destination data here.
+   ========================================================= */
+
+const countriesData = [
+
+{
+name:"India",
+flag:"🇮🇳",
+places:[
+"Taj Mahal, Agra",
+"Golden Temple, Amritsar",
+"India Gate, Delhi",
+"Gateway of India, Mumbai",
+"Jaipur, Rajasthan",
+"Varanasi Ghats",
+"Goa Beaches",
+"Kerala Backwaters",
+"Kashmir Valley",
+"Ladakh",
+"Hampi",
+"Rann of Kutch",
+"Darjeeling",
+"Meghalaya",
+"Andaman Islands"
+]
+},
+
+{
+name:"Japan",
+flag:"🇯🇵",
+places:[
+"Tokyo",
+"Mount Fuji",
+"Kyoto",
+"Osaka",
+"Nara",
+"Hiroshima",
+"Hokkaido",
+"Okinawa",
+"Arashiyama",
+"Nikko",
+"Kamakura",
+"Takayama",
+"Fushimi Inari",
+"Shirakawa-go",
+"Lake Kawaguchi"
+]
+},
+
+{
+name:"France",
+flag:"🇫🇷",
+places:[
+"Paris",
+"Eiffel Tower",
+"Nice",
+"French Riviera",
+"Mont Saint-Michel",
+"Versailles",
+"Lyon",
+"Bordeaux",
+"Provence",
+"Chamonix",
+"Annecy",
+"Normandy",
+"Loire Valley",
+"Corsica",
+"Strasbourg"
+]
+},
+
+{
+name:"Italy",
+flag:"🇮🇹",
+places:[
+"Rome",
+"Colosseum",
+"Venice",
+"Florence",
+"Milan",
+"Amalfi Coast",
+"Lake Como",
+"Cinque Terre",
+"Pompeii",
+"Vatican City",
+"Tuscany",
+"Capri",
+"Naples",
+"Sicily",
+"Dolomites"
+]
+},
+
+{
+name:"United States",
+flag:"🇺🇸",
+places:[
+"New York City",
+"Grand Canyon",
+"Los Angeles",
+"Las Vegas",
+"Yellowstone",
+"San Francisco",
+"Miami",
+"Washington DC",
+"Chicago",
+"Niagara Falls",
+"Orlando",
+"Hawaii",
+"Alaska",
+"Yosemite",
+"Boston"
+]
+},
+
+{
+name:"United Kingdom",
+flag:"🇬🇧",
+places:[
+"London",
+"Stonehenge",
+"Edinburgh",
+"Scottish Highlands",
+"Lake District",
+"Bath",
+"Oxford",
+"Cambridge",
+"York",
+"Cotswolds",
+"Brighton",
+"Snowdonia",
+"Liverpool",
+"Cornwall",
+"Bristol"
+]
+},
+
+{
+name:"Australia",
+flag:"🇦🇺",
+places:[
+"Sydney",
+"Great Barrier Reef",
+"Melbourne",
+"Gold Coast",
+"Uluru",
+"Great Ocean Road",
+"Brisbane",
+"Perth",
+"Blue Mountains",
+"Whitsunday Islands",
+"Adelaide",
+"Tasmania",
+"Cairns",
+"Darwin",
+"Byron Bay"
+]
+},
+
+{
+name:"Switzerland",
+flag:"🇨🇭",
+places:[
+"Zurich",
+"Lucerne",
+"Interlaken",
+"Jungfrau",
+"Zermatt",
+"Lake Geneva",
+"Geneva",
+"Bern",
+"Grindelwald",
+"Lauterbrunnen",
+"St Moritz",
+"Montreux",
+"Rhine Falls",
+"Engelberg",
+"Lake Zurich"
+]
+},
+
+{
+name:"United Arab Emirates",
+flag:"🇦🇪",
+places:[
+"Dubai",
+"Burj Khalifa",
+"Abu Dhabi",
+"Sheikh Zayed Grand Mosque",
+"Palm Jumeirah",
+"Dubai Marina",
+"Jumeirah Beach",
+"Desert Safari Dubai",
+"Al Ain",
+"Sharjah",
+"Fujairah",
+"Ras Al Khaimah",
+"Dubai Frame",
+"Atlantis The Palm",
+"Louvre Abu Dhabi"
+]
+},
+
+{
+name:"Singapore",
+flag:"🇸🇬",
+places:[
+"Marina Bay Sands",
+"Gardens by the Bay",
+"Sentosa Island",
+"Singapore Flyer",
+"Merlion Park",
+"Universal Studios Singapore",
+"Chinatown",
+"Little India",
+"Orchard Road",
+"Clarke Quay",
+"Jewel Changi",
+"East Coast Park",
+"Singapore Zoo",
+"Night Safari",
+"Pulau Ubin"
+]
+},
+
+{
+name:"Thailand",
+flag:"🇹🇭",
+places:[
+"Bangkok",
+"Phuket",
+"Krabi",
+"Chiang Mai",
+"Phi Phi Islands",
+"Pattaya",
+"Koh Samui",
+"Railay Beach",
+"Ayutthaya",
+"Khao Sok",
+"Pai",
+"Koh Tao",
+"James Bond Island",
+"Similan Islands",
+"Grand Palace Bangkok"
+]
+},
+
+{
+name:"Indonesia",
+flag:"🇮🇩",
+places:[
+"Bali",
+"Jakarta",
+"Ubud",
+"Komodo Island",
+"Nusa Penida",
+"Lombok",
+"Mount Bromo",
+"Yogyakarta",
+"Borobudur",
+"Gili Islands",
+"Raja Ampat",
+"Lake Toba",
+"Seminyak",
+"Uluwatu",
+"Flores"
+]
+},
+
+{
+name:"Spain",
+flag:"🇪🇸",
+places:[
+"Barcelona",
+"Madrid",
+"Seville",
+"Granada",
+"Alhambra",
+"Ibiza",
+"Mallorca",
+"Valencia",
+"Toledo",
+"Bilbao",
+"Canary Islands",
+"Malaga",
+"Costa del Sol",
+"Montserrat",
+"San Sebastian"
+]
+},
+
+{
+name:"Greece",
+flag:"🇬🇷",
+places:[
+"Athens",
+"Acropolis",
+"Santorini",
+"Mykonos",
+"Crete",
+"Rhodes",
+"Corfu",
+"Meteora",
+"Zakynthos",
+"Paros",
+"Naxos",
+"Delphi",
+"Thessaloniki",
+"Hydra",
+"Milos"
+]
+},
+
+{
+name:"Egypt",
+flag:"🇪🇬",
+places:[
+"Cairo",
+"Giza Pyramids",
+"Sphinx",
+"Luxor",
+"Valley of the Kings",
+"Aswan",
+"Abu Simbel",
+"Red Sea",
+"Hurghada",
+"Sharm El Sheikh",
+"Ale​​xandria",
+"Siwa Oasis",
+"Nile River",
+"White Desert",
+"Philae Temple"
+]
+},
+
+{
+name:"Canada",
+flag:"🇨🇦",
+places:[
+"Toronto",
+"Vancouver",
+"Banff",
+"Jasper",
+"Niagara Falls",
+"Montreal",
+"Quebec City",
+"Whistler",
+"Lake Louise",
+"Calgary",
+"Victoria",
+"Yukon",
+"Nova Scotia",
+"Prince Edward Island",
+"Churchill"
+]
+},
+
+{
+name:"New Zealand",
+flag:"🇳🇿",
+places:[
+"Auckland",
+"Queenstown",
+"Milford Sound",
+"Rotorua",
+"Christchurch",
+"Wellington",
+"Mount Cook",
+"Lake Tekapo",
+"Franz Josef Glacier",
+"Bay of Islands",
+"Taupo",
+"Waitomo Caves",
+"Fiordland",
+"Coromandel",
+"Abel Tasman"
+]
+},
+
+{
+name:"Turkey",
+flag:"🇹🇷",
+places:[
+"Istanbul",
+"Cappadocia",
+"Pamukkale",
+"Antalya",
+"Ephesus",
+"Ankara",
+"Bodrum",
+"Blue Mosque",
+"Hagia Sophia",
+"Mount Ararat",
+"Fethiye",
+"Konya",
+"Trabzon",
+"Lake Van",
+"Oludeniz"
+]
+},
+
+{
+name:"Brazil",
+flag:"🇧🇷",
+places:[
+"Rio de Janeiro",
+"Christ the Redeemer",
+"Copacabana Beach",
+"Iguazu Falls",
+"Amazon Rainforest",
+"Sao Paulo",
+"Salvador",
+"Brasilia",
+"Fernando de Noronha",
+"Florianopolis",
+"Lençóis Maranhenses",
+"Pantanal",
+"Jericoacoara",
+"Paraty",
+"Bonito"
+]
+},
+
+{
+name:"South Africa",
+flag:"🇿🇦",
+places:[
+"Cape Town",
+"Table Mountain",
+"Kruger National Park",
+"Johannesburg",
+"Garden Route",
+"Durban",
+"Robben Island",
+"Blyde River Canyon",
+"Stellenbosch",
+"Drakensberg",
+"Knysna",
+"Hermanus",
+"Addo Elephant Park",
+"Sun City",
+"Victoria Falls"
+]
+},
+
+/* More countries */
+
+{
+name:"China",
+flag:"🇨🇳",
+places:[
+"Beijing",
+"Great Wall of China",
+"Shanghai",
+"Forbidden City",
+"Terracotta Army",
+"Xi'an",
+"Guilin",
+"Zhangjiajie",
+"Chengdu",
+"Hangzhou",
+"Jiuzhaigou",
+"Lhasa",
+"Yellow Mountains",
+"West Lake",
+"Potala Palace"
+]
+},
+
+{
+name:"Germany",
+flag:"🇩🇪",
+places:[
+"Berlin",
+"Munich",
+"Neuschwanstein Castle",
+"Black Forest",
+"Hamburg",
+"Frankfurt",
+"Cologne",
+"Rhine Valley",
+"Dresden",
+"Heidelberg",
+"Rothenburg",
+"Bavarian Alps",
+"Nuremberg",
+"Leipzig",
+"Lake Constance"
+]
+},
+
+{
+name:"Portugal",
+flag:"🇵🇹",
+places:[
+"Lisbon",
+"Porto",
+"Sintra",
+"Algarve",
+"Madeira",
+"Azores",
+"Cascais",
+"Faro",
+"Coimbra",
+"Braga",
+"Evora",
+"Nazare",
+"Obidos",
+"Douro Valley",
+"Benagil Cave"
+]
+},
+
+{
+name:"Maldives",
+flag:"🇲🇻",
+places:[
+"Male",
+"Maafushi",
+"Vaadhoo Island",
+"Addu Atoll",
+"Baa Atoll",
+"Ari Atoll",
+"North Male Atoll",
+"South Male Atoll",
+"Thulusdhoo",
+"Fulhadhoo",
+"Dhigurah",
+"Hulhumale",
+"Ukulhas",
+"Rasdhoo",
+"Hanifaru Bay"
+]
+},
+
+{
+name:"Nepal",
+flag:"🇳🇵",
+places:[
+"Kathmandu",
+"Mount Everest",
+"Pokhara",
+"Annapurna",
+"Chitwan",
+"Bhaktapur",
+"Lumbini",
+"Nagarkot",
+"Everest Base Camp",
+"Mustang",
+"Langtang",
+"Bandipur",
+"Phewa Lake",
+"Manang",
+"Namche Bazaar"
+]
+},
+
+{
+name:"Sri Lanka",
+flag:"🇱🇰",
+places:[
+"Colombo",
+"Kandy",
+"Sigiriya",
+"Galle",
+"Yala National Park",
+"Mirissa",
+"Nuwara Eliya",
+"Ella",
+"Bentota",
+"Arugam Bay",
+"Jaffna",
+"Dambulla",
+"Adam's Peak",
+"Udawalawe",
+"Trincomalee"
+]
+},
+
+{
+name:"Vietnam",
+flag:"🇻🇳",
+places:[
+"Hanoi",
+"Ho Chi Minh City",
+"Ha Long Bay",
+"Da Nang",
+"Hoi An",
+"Nha Trang",
+"Sapa",
+"Phu Quoc",
+"Ha Giang",
+"Phong Nha",
+"Ninh Binh",
+"Da Lat",
+"Mui Ne",
+"Con Dao",
+"Mekong Delta"
+]
+},
+
+{
+name:"Malaysia",
+flag:"🇲🇾",
+places:[
+"Kuala Lumpur",
+"Petronas Towers",
+"Langkawi",
+"Penang",
+"George Town",
+"Borneo",
+"Cameron Highlands",
+"Malacca",
+"Perhentian Islands",
+"Redang Island",
+"Mount Kinabalu",
+"Taman Negara",
+"Tioman Island",
+"Putrajaya",
+"Johor Bahru"
+]
+},
+
+{
+name:"South Korea",
+flag:"🇰🇷",
+places:[
+"Seoul",
+"Busan",
+"Jeju Island",
+"Gyeongbokgung Palace",
+"Nami Island",
+"Incheon",
+"DMZ",
+"Gyeongju",
+"Seoraksan",
+"Daegu",
+"Jeonju",
+"Sokcho",
+"Andong",
+"Ulsan",
+"Gamcheon Culture Village"
+]
+},
+
+{
+name:"Mexico",
+flag:"🇲🇽",
+places:[
+"Mexico City",
+"Cancun",
+"Chichen Itza",
+"Playa del Carmen",
+"Tulum",
+"Cabo San Lucas",
+"Puerto Vallarta",
+"Guadalajara",
+"Oaxaca",
+"Merida",
+"Isla Mujeres",
+"Cozumel",
+"Teotihuacan",
+"Acapulco",
+"San Miguel de Allende"
+]
+},
+
+{
+name:"Norway",
+flag:"🇳🇴",
+places:[
+"Oslo",
+"Bergen",
+"Geirangerfjord",
+"Tromso",
+"Lofoten Islands",
+"Flam",
+"Stavanger",
+"Preikestolen",
+"Trondheim",
+"Alesund",
+"Nordkapp",
+"Jotunheimen",
+"Loen",
+"Atlantic Ocean Road",
+"Svalbard"
+]
+},
+
+{
+name:"Iceland",
+flag:"🇮🇸",
+places:[
+"Reykjavik",
+"Blue Lagoon",
+"Golden Circle",
+"Skogafoss",
+"Seljalandsfoss",
+"Black Sand Beach",
+"Vatnajokull",
+"Jokulsarlon",
+"Akureyri",
+"Thingvellir",
+"Westfjords",
+"Diamond Beach",
+"Snæfellsnes",
+"Dettifoss",
+"Landmannalaugar"
+]
+},
+
+{
+name:"Russia",
+flag:"🇷🇺",
+places:[
+"Moscow",
+"Red Square",
+"Saint Petersburg",
+"Lake Baikal",
+"Kazan",
+"Sochi",
+"Golden Ring",
+"Kamchatka",
+"Altai Mountains",
+"Vladivostok",
+"Trans-Siberian Railway",
+"Yekaterinburg",
+"Murmansk",
+"Caucasus Mountains",
+"Peterhof"
+]
+},
+
+{
+name:"Austria",
+flag:"🇦🇹",
+places:[
+"Vienna",
+"Salzburg",
+"Hallstatt",
+"Innsbruck",
+"Tyrol",
+"Zell am See",
+"Grossglockner",
+"St Anton",
+"Wachau Valley",
+"Graz",
+"Kitzbuhel",
+"Lake Wolfgang",
+"Bad Ischl",
+"Dachstein",
+"Schonbrunn Palace"
+]
+},
+
+{
+name:"Netherlands",
+flag:"🇳🇱",
+places:[
+"Amsterdam",
+"Rotterdam",
+"Keukenhof",
+"Giethoorn",
+"The Hague",
+"Utrecht",
+"Kinderdijk",
+"Zaanse Schans",
+"Delft",
+"Leiden",
+"Maastricht",
+"Volendam",
+"Haarlem",
+"Texel",
+"Giethoorn Canals"
+]
+},
+
+{
+name:"Sweden",
+flag:"🇸🇪",
+places:[
+"Stockholm",
+"Gothenburg",
+"Malmo",
+"Abisko",
+"Kiruna",
+"Gotland",
+"Stockholm Archipelago",
+"Lapland",
+"Drottningholm Palace",
+"Uppsala",
+"Visby",
+"Sarek National Park",
+"Icehotel",
+"Vaxholm",
+"Liseberg"
+]
+},
+
+{
+name:"Finland",
+flag:"🇫🇮",
+places:[
+"Helsinki",
+"Rovaniemi",
+"Lapland",
+"Santa Claus Village",
+"Turku",
+"Tampere",
+"Porvoo",
+"Saimaa",
+"Nuuksio",
+"Kemi",
+"Levi",
+"Oulu",
+"Åland Islands",
+"Kakslauttanen",
+"Finnish Lakeland"
+]
+},
+
+{
+name:"Ireland",
+flag:"🇮🇪",
+places:[
+"Dublin",
+"Cliffs of Moher",
+"Galway",
+"Ring of Kerry",
+"Ring of Dingle",
+"Cork",
+"Killarney",
+"Giants Causeway",
+"Wild Atlantic Way",
+"Blarney Castle",
+"Kilkenny",
+"Connemara",
+"Donegal",
+"Wicklow",
+"Aran Islands"
+]
+},
+
+{
+name:"Switzerland",
+flag:"🇨🇭",
+places:[
+"Zurich",
+"Lucerne",
+"Interlaken",
+"Jungfrau",
+"Zermatt",
+"Geneva",
+"Bern",
+"Grindelwald",
+"Lauterbrunnen",
+"St Moritz",
+"Montreux",
+"Rhine Falls",
+"Engelberg",
+"Lake Geneva",
+"Lake Zurich"
+]
+},
+
+{
+name:"Philippines",
+flag:"🇵🇭",
+places:[
+"Manila",
+"Boracay",
+"Palawan",
+"El Nido",
+"Coron",
+"Cebu",
+"Bohol",
+"Siargao",
+"Chocolate Hills",
+"Puerto Princesa",
+"Davao",
+"Camiguin",
+"Banaue Rice Terraces",
+"Vigan",
+"Moalboal"
+]
+},
+
+{
+name:"Cambodia",
+flag:"🇰🇭",
+places:[
+"Angkor Wat",
+"Siem Reap",
+"Phnom Penh",
+"Koh Rong",
+"Battambang",
+"Tonle Sap",
+"Royal Palace",
+"Bayon Temple",
+"Ta Prohm",
+"Preah Vihear",
+"Kampot",
+" Kep",
+"Cardamom Mountains",
+"Kratie",
+"Silver Pagoda"
+]
+},
+
+{
+name:"Morocco",
+flag:"🇲🇦",
+places:[
+"Marrakech",
+"Casablanca",
+"Chefchaouen",
+"Fes",
+"Sahara Desert",
+"Atlas Mountains",
+"Essaouira",
+"Rabat",
+"Ait Benhaddou",
+"Ouarzazate",
+"Merzouga",
+"Agadir",
+"Volubilis",
+"Taghazout",
+"Todra Gorge"
+]
+},
+
+{
+name:"Saudi Arabia",
+flag:"🇸🇦",
+places:[
+"Riyadh",
+"Jeddah",
+"AlUla",
+"Edge of the World",
+"Diriyah",
+"Red Sea",
+"NEOM",
+"Taif",
+"Abha",
+"Al Soudah",
+"Farasan Islands",
+"Tabuk",
+"Al Ahsa Oasis",
+"Yanbu",
+"Kingdom Centre"
+]
+},
+
+{
+name:"Qatar",
+flag:"🇶🇦",
+places:[
+"Doha",
+"The Pearl Qatar",
+"Souq Waqif",
+"Katara",
+"National Museum of Qatar",
+"West Bay",
+"Qatar Desert",
+"Sealine Beach",
+"Al Zubarah",
+"Banana Island",
+"Lusail",
+"Museum of Islamic Art",
+"Msheireb",
+"Doha Corniche",
+"Purple Island"
+]
+},
+
+{
+name:"Jordan",
+flag:"🇯🇴",
+places:[
+"Petra",
+"Amman",
+"Wadi Rum",
+"Dead Sea",
+"Jerash",
+"Aqaba",
+"Mount Nebo",
+"Madaba",
+"Red Sea",
+"Dana Biosphere",
+"Ajloun",
+"Umm Qais",
+"Little Petra",
+"Jordan Valley",
+"Roman Theatre Amman"
+]
+},
+
+{
+name:"Israel",
+flag:"🇮🇱",
+places:[
+"Jerusalem",
+"Tel Aviv",
+"Dead Sea",
+"Masada",
+"Haifa",
+"Sea of Galilee",
+"Caesarea",
+"Negev Desert",
+"Eilat",
+"Acre",
+"Nazareth",
+"Ein Gedi",
+"Rosh HaNikra",
+"Jaffa",
+"Timna Park"
+]
+},
+
+{
+name:"Argentina",
+flag:"🇦🇷",
+places:[
+"Buenos Aires",
+"Iguazu Falls",
+"Patagonia",
+"Perito Moreno Glacier",
+"Bariloche",
+"Mendoza",
+"Ushuaia",
+"El Calafate",
+"Salta",
+"Quebrada de Humahuaca",
+"Mar del Plata",
+"Cordoba",
+"Lake District",
+"Tierra del Fuego",
+"Mount Fitz Roy"
+]
+},
+
+{
+name:"Chile",
+flag:"🇨🇱",
+places:[
+"Santiago",
+"Atacama Desert",
+"Easter Island",
+"Torres del Paine",
+"Valparaiso",
+"Puerto Varas",
+"Patagonia",
+"Chiloé Island",
+"San Pedro de Atacama",
+"Lake District",
+"Elqui Valley",
+"Punta Arenas",
+"Villarrica",
+"Marble Caves",
+"Conguillio"
+]
+},
+
+{
+name:"Peru",
+flag:"🇵🇪",
+places:[
+"Machu Picchu",
+"Lima",
+"Cusco",
+"Sacred Valley",
+"Lake Titicaca",
+"Arequipa",
+"Colca Canyon",
+"Huacachina",
+"Rainbow Mountain",
+"Amazon Rainforest",
+"Paracas",
+"Nazca Lines",
+"Chan Chan",
+"Pisac",
+"Tambopata"
+]
+},
+
+{
+name:"Colombia",
+flag:"🇨🇴",
+places:[
+"Bogota",
+"Cartagena",
+"Medellin",
+"Guatape",
+"Cocora Valley",
+"San Andres",
+"Tayrona National Park",
+"Coffee Region",
+"Santa Marta",
+"Villa de Leyva",
+"Salento",
+"Caño Cristales",
+"Amazon Colombia",
+"Barichara",
+"San Gil"
+]
+},
+
+{
+name:"Ecuador",
+flag:"🇪🇨",
+places:[
+"Quito",
+"Galapagos Islands",
+"Cuenca",
+"Baños",
+"Cotopaxi",
+"Amazon Rainforest",
+"Montañita",
+"Otavalo",
+"Chimborazo",
+"Mindo",
+"Quilotoa",
+"Guayaquil",
+"Isla Isabela",
+"Puerto Ayora",
+"Cajas National Park"
+]
+},
+
+{
+name:"Costa Rica",
+flag:"🇨🇷",
+places:[
+"San Jose",
+"Arenal Volcano",
+"Manuel Antonio",
+"Monteverde",
+"Tamarindo",
+"Corcovado",
+"Nicoya Peninsula",
+"Jaco",
+"Puerto Viejo",
+"Poas Volcano",
+"La Fortuna",
+"Nosara",
+"Uvita",
+"Drake Bay",
+"Rio Celeste"
+]
+},
+
+{
+name:"Bahamas",
+flag:"🇧🇸",
+places:[
+"Nassau",
+"Paradise Island",
+"Exuma",
+"Grand Bahama",
+"Harbour Island",
+"Eleuthera",
+"Andros Island",
+"Long Island",
+"Bimini",
+"Blue Lagoon Island",
+"Dean's Blue Hole",
+"Pig Beach",
+"Atlantis Bahamas",
+"Rose Island",
+"Lucayan National Park"
+]
+},
+
+{
+name:"Mauritius",
+flag:"🇲🇺",
+places:[
+"Port Louis",
+"Grand Baie",
+"Le Morne",
+"Black River Gorges",
+"Chamarel",
+"Île aux Cerfs",
+"Flic en Flac",
+"Trou aux Biches",
+"Pamplemousses",
+"Blue Bay",
+"Belle Mare",
+"Mahébourg",
+"Seven Coloured Earth",
+"Casela",
+"Gris Gris"
+]
+},
+
+{
+name:"Seychelles",
+flag:"🇸🇨",
+places:[
+"Mahe",
+"Praslin",
+"La Digue",
+"Anse Source d'Argent",
+"Anse Lazio",
+"Vallée de Mai",
+"Beau Vallon",
+"Curieuse Island",
+"Silhouette Island",
+"Morne Seychellois",
+"Grand Anse",
+"Petite Anse",
+"Bird Island",
+"Cousin Island",
+"Victoria"
+]
+},
+
+{
+name:"Tanzania",
+flag:"🇹🇿",
+places:[
+"Mount Kilimanjaro",
+"Serengeti",
+"Zanzibar",
+"Ngorongoro Crater",
+"Dar es Salaam",
+"Arusha",
+"Lake Manyara",
+"Tarangire",
+"Stone Town",
+"Mnemba Island",
+"Selous",
+"Mafia Island",
+"Ruaha",
+"Lake Natron",
+"Olduvai Gorge"
+]
+},
+
+{
+name:"Kenya",
+flag:"🇰🇪",
+places:[
+"Nairobi",
+"Maasai Mara",
+"Amboseli",
+"Mount Kenya",
+"Lake Nakuru",
+"Diani Beach",
+"Mombasa",
+"Tsavo National Park",
+"Lamu",
+"Naivasha",
+"Samburu",
+"Watamu",
+"Malindi",
+"Lake Turkana",
+"Hell's Gate"
+]
+},
+
+{
+name:"Namibia",
+flag:"🇳🇦",
+places:[
+"Windhoek",
+"Sossusvlei",
+"Etosha National Park",
+"Swakopmund",
+"Skeleton Coast",
+"Fish River Canyon",
+"Walvis Bay",
+"Namib Desert",
+"Spitzkoppe",
+"Deadvlei",
+"Kolmanskop",
+"Caprivi Strip",
+"Sesriem",
+"Lüderitz",
+"Waterberg"
+]
+},
+
+{
+name:"Botswana",
+flag:"🇧🇼",
+places:[
+"Okavango Delta",
+"Chobe National Park",
+"Maun",
+"Makgadikgadi Pans",
+"Moremi",
+"Central Kalahari",
+"Kasane",
+"Tsodilo Hills",
+"Victoria Falls",
+"Khama Rhino Sanctuary",
+"Francistown",
+"Makgadikgadi",
+"Selinda Reserve",
+"Linyanti",
+"Gaborone"
+]
+},
+
+{
+name:"Zambia",
+flag:"🇿🇲",
+places:[
+"Victoria Falls",
+"Livingstone",
+"South Luangwa",
+"Lower Zambezi",
+"Kafue National Park",
+"Lusaka",
+"Lake Kariba",
+"Sioma Ngwezi",
+"Devil's Pool",
+"Zambezi River",
+"Nsumbu National Park",
+"Bangweulu Wetlands",
+"Kasanka",
+"South Luangwa River",
+"Livingstone Island"
+]
+},
+
+{
+name:"Zimbabwe",
+flag:"🇿🇼",
+places:[
+"Victoria Falls",
+"Harare",
+"Hwange National Park",
+"Great Zimbabwe",
+"Matobo National Park",
+"Mana Pools",
+"Lake Kariba",
+"Bulawayo",
+"Nyanga",
+"Zambezi River",
+"Victoria Falls Bridge",
+"Chinhoyi Caves",
+"Mutare",
+"Khami Ruins",
+"Eastern Highlands"
+]
+},
+
+{
+name:"Madagascar",
+flag:"🇲🇬",
+places:[
+"Antananarivo",
+"Baobab Avenue",
+"Nosy Be",
+"Isalo National Park",
+"Ranomafana",
+"Morondava",
+"Île Sainte-Marie",
+"Antsirabe",
+"Andasibe",
+"Tsingy de Bemaraha",
+"Nosy Boraha",
+"Ankarafantsika",
+"Toamasina",
+"Fort Dauphin",
+"Amber Mountain"
+]
+},
+
+{
+name:"Fiji",
+flag:"🇫🇯",
+places:[
+"Nadi",
+"Suva",
+"Denarau Island",
+"Yasawa Islands",
+"Mamanuca Islands",
+"Coral Coast",
+"Vanua Levu",
+"Taveuni",
+"Blue Lagoon",
+"Kadavu",
+"Savusavu",
+"Natadola Beach",
+"Pacific Harbour",
+"Sigatoka",
+"Beqa Island"
+]
+},
+
+{
+name:"Samoa",
+flag:"🇼🇸",
+places:[
+"Apia",
+"To Sua Ocean Trench",
+"Upolu",
+"Savai'i",
+"Piula Cave",
+"Robert Louis Stevenson Museum",
+"Lalomanu Beach",
+"Papaseea Sliding Rocks",
+"Saleapaga",
+"Falealupo",
+"Manono Island",
+"Lake Lanoto'o",
+"Palolo Deep",
+"Afuaau Falls",
+"Salelologa"
+]
+},
+
+{
+name:"Portugal",
+flag:"🇵🇹",
+places:[
+"Lisbon",
+"Porto",
+"Sintra",
+"Algarve",
+"Madeira",
+"Azores",
+"Cascais",
+"Faro",
+"Coimbra",
+"Braga",
+"Evora",
+"Nazare",
+"Obidos",
+"Douro Valley",
+"Benagil Cave"
+]
+},
+
+{
+name:"Belgium",
+flag:"🇧🇪",
+places:[
+"Brussels",
+"Bruges",
+"Antwerp",
+"Ghent",
+"Leuven",
+"Dinant",
+"Ardennes",
+"Mechelen",
+"Liege",
+"Namur",
+"Waterloo",
+"Ypres",
+"Knokke",
+"Durbuy",
+"Hasselt"
+]
+},
+
+{
+name:"Czech Republic",
+flag:"🇨🇿",
+places:[
+"Prague",
+"Cesky Krumlov",
+"Brno",
+"Kutna Hora",
+"Karlovy Vary",
+"Olomouc",
+"Bohemian Switzerland",
+"Plzen",
+"Telc",
+"Liberec",
+"Moravian Karst",
+"Loket",
+"Karlstejn Castle",
+"Prague Castle",
+"Pardubice"
+]
+},
+
+{
+name:"Hungary",
+flag:"🇭🇺",
+places:[
+"Budapest",
+"Lake Balaton",
+"Buda Castle",
+"Fisherman's Bastion",
+"Parliament Budapest",
+"Szentendre",
+"Eger",
+"Debrecen",
+"Hortobagy",
+"Pecs",
+"Sopron",
+"Tihany",
+"Visegrad",
+"Gyor",
+"Heviz"
+]
+},
+
+{
+name:"Croatia",
+flag:"🇭🇷",
+places:[
+"Dubrovnik",
+"Split",
+"Plitvice Lakes",
+"Hvar",
+"Zagreb",
+"Zadar",
+"Rovinj",
+"Pula",
+"Korcula",
+"Brac",
+"Krka National Park",
+"Makarska",
+"Sibenik",
+"Vis Island",
+"Opatija"
+]
+},
+
+{
+name:"Slovenia",
+flag:"🇸🇮",
+places:[
+"Ljubljana",
+"Lake Bled",
+"Lake Bohinj",
+"Postojna Cave",
+"Predjama Castle",
+"Triglav National Park",
+"Piran",
+"Kranjska Gora",
+"Maribor",
+"Soča Valley",
+"Ptuj",
+"Vintgar Gorge",
+"Portoroz",
+"Logar Valley",
+"Skocjan Caves"
+]
+},
+
+{
+name:"Slovakia",
+flag:"🇸🇰",
+places:[
+"Bratislava",
+"High Tatras",
+"Kosice",
+"Banska Stiavnica",
+"Spis Castle",
+"Slovak Paradise",
+"Orava Castle",
+"Trencin",
+"Levoca",
+"Demanovska Cave",
+"Donovaly",
+"Piestany",
+"Bojnice Castle",
+"Liptov",
+"Zilina"
+]
+},
+
+{
+name:"Romania",
+flag:"🇷🇴",
+places:[
+"Bucharest",
+"Bran Castle",
+"Transylvania",
+"Brasov",
+"Cluj-Napoca",
+"Sibiu",
+"Danube Delta",
+"Transfagarasan",
+"Black Sea",
+"Sighisoara",
+"Peles Castle",
+"Timisoara",
+"Maramures",
+"Turda Salt Mine",
+"Corvin Castle"
+]
+},
+
+{
+name:"Bulgaria",
+flag:"🇧🇬",
+places:[
+"Sofia",
+"Rila Monastery",
+"Plovdiv",
+"Varna",
+"Sunny Beach",
+"Bansko",
+"Seven Rila Lakes",
+"Nessebar",
+"Veliko Tarnovo",
+"Rila Mountains",
+"Pirin Mountains",
+"Sozopol",
+"Koprivshtitsa",
+"Balchik",
+"Borovets"
+]
+},
+
+{
+name:"Georgia",
+flag:"🇬🇪",
+places:[
+"Tbilisi",
+"Kazbegi",
+"Batumi",
+"Kutaisi",
+"Gergeti Trinity Church",
+"Svaneti",
+"Borjomi",
+"Gudauri",
+"Vardzia",
+"Uplistsikhe",
+"Kakheti",
+"Mestia",
+"Martvili Canyon",
+"Prometheus Cave",
+"Signagi"
+]
+},
+
+{
+name:"Armenia",
+flag:"🇦🇲",
+places:[
+"Yerevan",
+"Lake Sevan",
+"Geghard Monastery",
+"Garni Temple",
+"Dilijan",
+"Tatev Monastery",
+"Gyumri",
+"Noravank",
+"Jermuk",
+"Sevanavank",
+"Mount Aragats",
+"Khor Virap",
+"Amberd Fortress",
+"Tsaghkadzor",
+"Debed Canyon"
+]
+},
+
+{
+name:"Azerbaijan",
+flag:"🇦🇿",
+places:[
+"Baku",
+"Flame Towers",
+"Old City Baku",
+"Gabala",
+"Sheki",
+"Quba",
+"Yanar Dag",
+"Ateshgah Fire Temple",
+"Gobustan",
+"Shahdag",
+"Lahic",
+"Nakhchivan",
+"Khinaliq",
+"Caspian Sea",
+"Mud Volcanoes"
+]
+},
+
+{
+name:"Oman",
+flag:"🇴🇲",
+places:[
+"Muscat",
+"Wadi Shab",
+"Salalah",
+"Jebel Akhdar",
+"Jebel Shams",
+"Nizwa",
+"Sur",
+"Musandam",
+"Ras Al Jinz",
+"Daymaniyat Islands",
+"Bimmah Sinkhole",
+"Wahiba Sands",
+"Al Hamra",
+"Misfat Al Abriyeen",
+"Qurum Beach"
+]
+},
+
+{
+name:"Bhutan",
+flag:"🇧🇹",
+places:[
+"Thimphu",
+"Paro",
+"Tiger's Nest",
+"Punakha",
+"Phobjikha Valley",
+"Dochula Pass",
+"Bumthang",
+"Trongsa",
+"Haa Valley",
+"Jigme Dorji National Park",
+"Chele La",
+"Phuentsholing",
+"Chukha",
+"Motithang",
+"Taktsang Monastery"
+]
+},
+
+{
+name:"Laos",
+flag:"🇱🇦",
+places:[
+"Luang Prabang",
+"Vientiane",
+"Vang Vieng",
+"Kuang Si Falls",
+"Plain of Jars",
+"Pakse",
+"4000 Islands",
+"Si Phan Don",
+"Thakhek",
+"Bolaven Plateau",
+"Wat Phou",
+"Nong Khiaw",
+"Nam Ngum",
+"Phonsavan",
+"Khong Island"
+]
+},
+
+{
+name:"Mongolia",
+flag:"🇲🇳",
+places:[
+"Ulaanbaatar",
+"Gobi Desert",
+"Terelj National Park",
+"Lake Khövsgöl",
+"Orkhon Valley",
+"Kar​​akorum",
+"Altai Mountains",
+"Flaming Cliffs",
+"Naadam Festival",
+"White Stupa",
+"Kharkhorin",
+"Eagle Valley",
+"Bayanzag",
+"Khustain Nuruu",
+"Amarbayasgalant Monastery"
+]
+},
+
+{
+name:"Pakistan",
+flag:"🇵🇰",
+places:[
+"Islamabad",
+"Lahore",
+"Karachi",
+"Hunza Valley",
+"Skardu",
+"Fairy Meadows",
+"Swat Valley",
+"Naran Kaghan",
+"Murree",
+"Deosai Plains",
+"Badshahi Mosque",
+"Minar-e-Pakistan",
+"Neelum Valley",
+"Passu Cones",
+"Khunjerab Pass"
+]
+},
+
+{
+name:"Bangladesh",
+flag:"🇧🇩",
+places:[
+"Dhaka",
+"Cox's Bazar",
+"Saint Martin's Island",
+"Sundarbans",
+"Srimangal",
+"Rangamati",
+"Bandarban",
+"Chittagong",
+"Sonargaon",
+"Paharpur",
+"Kuakata",
+"Ratargul Swamp Forest",
+"Jaflong",
+"Panam City",
+"Lalbagh Fort"
+]
+},
+
+{
+name:"Myanmar",
+flag:"🇲🇲",
+places:[
+"Yangon",
+"Bagan",
+"Inle Lake",
+"Mandalay",
+"Ngapali Beach",
+"Golden Rock",
+"Ngwe Saung",
+"Kalaw",
+"Mount Popa",
+"Pyin Oo Lwin",
+"Mrauk U",
+"Yangon Circular Railway",
+"U Bein Bridge",
+"Shwedagon Pagoda",
+"Thanlyin"
+]
+},
+
+{
+name:"Brunei",
+flag:"🇧🇳",
+places:[
+"Bandar Seri Begawan",
+"Omar Ali Saifuddien Mosque",
+"Kampong Ayer",
+"Ulu Temburong",
+"Jame' Asr Hassanil Bolkiah Mosque",
+"Royal Regalia Museum",
+"Tasek Merimbun",
+"Jerudong Park",
+"Muara Beach",
+"Empire Hotel",
+"Brunei River",
+"Seria",
+"Kuala Belait",
+"Labi Forest",
+"Tutong"
+]
+},
+
+{
+name:"Papua New Guinea",
+flag:"🇵🇬",
+places:[
+"Port Moresby",
+"Kokoda Track",
+"Mount Wilhelm",
+"Milne Bay",
+"Madang",
+"Rabaul",
+"Sepik River",
+"New Ireland",
+"Kimbe Bay",
+"Mount Hagen",
+"Tufi",
+"Alotau",
+"Manus Island",
+"Varirata National Park",
+"East New Britain"
+]
+},
+
+{
+name:"Vanuatu",
+flag:"🇻🇺",
+places:[
+"Port Vila",
+"Efate",
+"Tanna Island",
+"Mount Yasur",
+"Espiritu Santo",
+"Blue Lagoon",
+"Champagne Beach",
+"Pentecost Island",
+"Hideaway Island",
+"Me​​le Cascades",
+"Erakor Lagoon",
+"Port Olry",
+"Ambrym",
+"Malekula",
+"Rarru"
+]
+},
+
+{
+name:"Palau",
+flag:"🇵🇼",
+places:[
+"Koror",
+"Rock Islands",
+"Jellyfish Lake",
+"Blue Corner",
+"Milky Way",
+"Ngardmau Waterfall",
+"German Channel",
+"Kayangel",
+"Long Beach",
+"Ulong Island",
+"Big Drop-Off",
+"Blue Hole",
+"Ngemelis",
+"Babeldaob",
+"Palau Pacific Resort"
+]
+},
+
+{
+name:"Malta",
+flag:"🇲🇹",
+places:[
+"Valletta",
+"Mdina",
+"Gozo",
+"Comino",
+"Blue Lagoon",
+"St Julian's",
+"Three Cities",
+"Marsaxlokk",
+"Blue Grotto",
+"Golden Bay",
+"Rabat",
+"Ħaġar Qim",
+"Mellieha",
+"Victoria Gozo",
+"St Peter's Pool"
+]
+},
+
+{
+name:"Cyprus",
+flag:"🇨🇾",
+places:[
+"Nicosia",
+"Paphos",
+"Limassol",
+"Protaras",
+"Ayia Napa",
+"Troodos Mountains",
+"Blue Lagoon Cyprus",
+"Kyrenia",
+"Fig Tree Bay",
+"Coral Bay",
+"Akamas Peninsula",
+"Larnaca",
+"Petra tou Romiou",
+"Polis",
+"Avakas Gorge"
+]
+},
+
+{
+name:"Albania",
+flag:"🇦🇱",
+places:[
+"Tirana",
+"Berat",
+"Gjirokaster",
+"Saranda",
+"Ksamil",
+"Theth",
+"Shkoder",
+"Vlore",
+"Albanian Riviera",
+"Blue Eye",
+"Lake Ohrid",
+"Durres",
+"Apollonia",
+"Llogara Pass",
+"Koman Lake"
+]
+},
+
+{
+name:"Montenegro",
+flag:"🇲🇪",
+places:[
+"Kotor",
+"Budva",
+"Durmitor",
+"Perast",
+"Sveti Stefan",
+"Lake Skadar",
+"Herceg Novi",
+"Tara Canyon",
+"Ulcinj",
+"Lovcen",
+"Bar",
+"Biogradska Gora",
+"Žabljak",
+"Petrovac",
+"Blue Cave Montenegro"
+]
+},
+
+{
+name:"Bosnia and Herzegovina",
+flag:"🇧🇦",
+places:[
+"Sarajevo",
+"Mostar",
+"Stari Most",
+"Blagaj",
+"Jajce",
+"Una National Park",
+"Mostar Old Town",
+"Travnik",
+"Neum",
+"Vrelo Bosne",
+"Počitelj",
+"Jahorina",
+"Trebinje",
+"Višegrad",
+"Drina River"
+]
+},
+
+{
+name:"Serbia",
+flag:"🇷🇸",
+places:[
+"Belgrade",
+"Novi Sad",
+"Niš",
+"Tara National Park",
+"Uvac Canyon",
+"Zlatibor",
+"Kopaonik",
+"Drvengrad",
+"Golubac Fortress",
+"Studenica Monastery",
+"Đerdap Gorge",
+"Subotica",
+"Sremski Karlovci",
+"Ada Ciganlija",
+"Devil's Town"
+]
+},
+
+{
+name:"North Macedonia",
+flag:"🇲🇰",
+places:[
+"Skopje",
+"Lake Ohrid",
+"Ohrid Old Town",
+"Mavrovo",
+"Matka Canyon",
+"Bitola",
+"Prilep",
+"Krusevo",
+"St Naum",
+"Pelister",
+"Vevcani",
+"Kokino",
+"Struga",
+"Tikvesh",
+"Šar Mountains"
+]
+},
+
+{
+name:"Lithuania",
+flag:"🇱🇹",
+places:[
+"Vilnius",
+"Kaunas",
+"Trakai",
+"Curonian Spit",
+"Klaipeda",
+"Palanga",
+"Šiauliai",
+"Hill of Crosses",
+"Druskininkai",
+"Panevezys",
+"Nida",
+"Rumšiškės",
+"Zarasai",
+"Birštonas",
+"Anyksciai"
+]
+},
+
+{
+name:"Latvia",
+flag:"🇱🇻",
+places:[
+"Riga",
+"Jurmala",
+"Gauja National Park",
+"Sigulda",
+"Cesis",
+"Liepaja",
+"Daugavpils",
+"Rundale Palace",
+"Kuldiga",
+"Ventspils",
+"Saulkrasti",
+"Jelgava",
+"Latgale",
+"Turaida Castle",
+"Venta Rapid"
+]
+},
+
+{
+name:"Estonia",
+flag:"🇪🇪",
+places:[
+"Tallinn",
+"Old Town Tallinn",
+"Parnu",
+"Lahemaa National Park",
+"Saaremaa",
+"Hiiumaa",
+"Tartu",
+"Narva",
+"Kadriorg Palace",
+"Soomaa National Park",
+"Haapsalu",
+"Otepaa",
+"Rakvere",
+"Viljandi",
+"Kuressaare"
+]
+},
+
+{
+name:"Luxembourg",
+flag:"🇱🇺",
+places:[
+"Luxembourg City",
+"Vianden Castle",
+"Clervaux",
+"Echternach",
+"Mullerthal",
+"Beaufort Castle",
+"Larochette",
+"Remich",
+"Moselle Valley",
+"Grund",
+"Kirchberg",
+"Schengen",
+"Upper Sûre Lake",
+"Red Rocks",
+"Luxembourg Old Town"
+]
+},
+
+{
+name:"Liechtenstein",
+flag:"🇱🇮",
+places:[
+"Vaduz",
+"Vaduz Castle",
+"Malbun",
+"Triesenberg",
+"Balzers",
+"Ruggell",
+"Eschen",
+"Steg",
+"Alps",
+"Red House Vaduz",
+"Princes' Trail",
+"Gaflei",
+"Planken",
+"Schellenberg",
+"Three Sisters"
+]
+},
+
+{
+name:"Andorra",
+flag:"🇦🇩",
+places:[
+"Andorra la Vella",
+"Grandvalira",
+"Vallnord",
+"Caldea",
+"Ordino",
+"Canillo",
+"Encamp",
+"La Massana",
+"Pas de la Casa",
+"Madriu Valley",
+"Comapedrosa",
+"Meritxell Sanctuary",
+"Engolasters Lake",
+"Pal",
+"Arinsal"
+]
+},
+
+{
+name:"Monaco",
+flag:"🇲🇨",
+places:[
+"Monte Carlo",
+"Casino de Monte Carlo",
+"Monaco-Ville",
+"Prince's Palace",
+"Larvotto Beach",
+"Oceanographic Museum",
+"Port Hercules",
+"Japanese Garden",
+"Exotic Garden",
+"Formula 1 Circuit",
+"Cathedral of Monaco",
+"Fontvieille",
+"Saint Martin Gardens",
+"Grimaldi Forum",
+"Cap d'Ail"
+]
+},
+
+{
+name:"San Marino",
+flag:"🇸🇲",
+places:[
+"San Marino City",
+"Guaita Tower",
+"Cesta Tower",
+"Montale Tower",
+"Palazzo Pubblico",
+"Liberty Square",
+"Basilica of San Marino",
+"Mount Titano",
+"Passo delle Streghe",
+"City Walls",
+"Museo delle Cere",
+"Parco Naturale",
+"Borgo Maggiore",
+"Faetano",
+"Montegiardino"
+]
+},
+
+{
+name:"Vatican City",
+flag:"🇻🇦",
+places:[
+"St Peter's Basilica",
+"Sistine Chapel",
+"Vatican Museums",
+"St Peter's Square",
+"Vatican Gardens",
+"Castel Sant'Angelo",
+"Vatican Necropolis",
+"Raphael Rooms",
+"Apostolic Palace",
+"Vatican Library",
+"Pinacoteca",
+"Braccio Nuovo",
+"Vatican Obelisk",
+"St Peter's Dome",
+"Via della Conciliazione"
+]
+},
+
+{
+name:"Uruguay",
+flag:"🇺🇾",
+places:[
+"Montevideo",
+"Punta del Este",
+"Colonia del Sacramento",
+"Cabo Polonio",
+"La Paloma",
+"Piriapolis",
+"Jose Ignacio",
+"Rocha",
+"Santa Teresa",
+"Atlantida",
+"Salto",
+"Minas",
+"Quebrada de los Cuervos",
+"Casapueblo",
+"Punta del Diablo"
+]
+},
+
+{
+name:"Paraguay",
+flag:"🇵🇾",
+places:[
+"Asuncion",
+"Iguazu Falls",
+"Encarnacion",
+"Ciudad del Este",
+"Jesús de Tavarangue",
+"Trinidad Ruins",
+"Ybycui National Park",
+"Saltos del Monday",
+"San Bernardino",
+"Filadelfia",
+"Chaco",
+"Aregua",
+"Lake Ypacarai",
+"Cerro Cora",
+"Ñacunday"
+]
+},
+
+{
+name:"Bolivia",
+flag:"🇧🇴",
+places:[
+"La Paz",
+"Uyuni Salt Flats",
+"Lake Titicaca",
+"Sucre",
+"Potosi",
+"Death Road",
+"Madidi National Park",
+"Salar de Uyuni",
+"Cochabamba",
+"Santa Cruz",
+"Tiwanaku",
+"Valle de la Luna",
+"Eduardo Avaroa Reserve",
+"Tarija",
+"Torotoro"
+]
+},
+
+{
+name:"Panama",
+flag:"🇵🇦",
+places:[
+"Panama City",
+"Panama Canal",
+"Bocas del Toro",
+"San Blas Islands",
+"Boquete",
+"Coiba Island",
+"Casco Viejo",
+"Santa Catalina",
+"Portobelo",
+"El Valle de Anton",
+"Darien",
+"Pearl Islands",
+"Taboga Island",
+"Gamboa",
+"Biomuseo"
+]
+},
+
+{
+name:"Jamaica",
+flag:"🇯🇲",
+places:[
+"Montego Bay",
+"Negril",
+"Ocho Rios",
+"Kingston",
+"Blue Mountains",
+"Dunn's River Falls",
+"Seven Mile Beach",
+"Port Antonio",
+"Rick's Cafe",
+"Doctor's Cave Beach",
+"Bob Marley Museum",
+"YS Falls",
+"Frenchman's Cove",
+"Blue Hole",
+"Rose Hall"
+]
+},
+
+{
+name:"Dominican Republic",
+flag:"🇩🇴",
+places:[
+"Punta Cana",
+"Santo Domingo",
+"Puerto Plata",
+"Saona Island",
+"Samana",
+"Bayahibe",
+"Las Terrenas",
+"Cabarete",
+"Los Haitises",
+"27 Waterfalls",
+"Playa Bavaro",
+"Isla Catalina",
+"Jarabacoa",
+"Altos de Chavon",
+"Lake Enriquillo"
+]
+},
+
+{
+name:"Cuba",
+flag:"🇨🇺",
+places:[
+"Havana",
+"Varadero",
+"Trinidad",
+"Viñales",
+"Cayo Coco",
+"Baracoa",
+"Holguin",
+"Guardalavaca",
+"Santa Clara",
+"Bay of Pigs",
+"Camaguey",
+"Santiago de Cuba",
+"El Nicho",
+"Topes de Collantes",
+"Old Havana"
+]
+},
+
+{
+name:"United States",
+flag:"🇺🇸",
+places:[
+"New York City",
+"Grand Canyon",
+"Los Angeles",
+"Yellowstone",
+"San Francisco",
+"Miami",
+"Las Vegas",
+"Washington DC",
+"Chicago",
+"Hawaii",
+"Alaska",
+"Yosemite",
+"Boston",
+"Orlando",
+"New Orleans"
+]
+},
+
+{
+name:"Australia",
+flag:"🇦🇺",
+places:[
+"Sydney",
+"Great Barrier Reef",
+"Melbourne",
+"Gold Coast",
+"Uluru",
+"Great Ocean Road",
+"Brisbane",
+"Perth",
+"Blue Mountains",
+"Whitsunday Islands",
+"Adelaide",
+"Tasmania",
+"Cairns",
+"Darwin",
+"Byron Bay"
+]
+}
+
+];
+
+
+/* =========================================================
+   COUNTRY DISPLAY
+   ========================================================= */
+
+const countriesContainer =
+    document.getElementById("countries");
+
+const countrySection =
+    document.getElementById("countrySection");
+
+const destinationSection =
+    document.getElementById("destinations");
+
+const destinationGrid =
+    document.getElementById("destinationGrid");
+
+const countryTitle =
+    document.getElementById("countryTitle");
+
+const loading =
+    document.getElementById("loading");
+
+const resultCount =
+    document.getElementById("resultCount");
+
+
+function showCountries(list){
+
+    countriesContainer.innerHTML="";
+
+    resultCount.textContent =
+        `${list.length} countries`;
+
+    if(list.length === 0){
+
+        countriesContainer.innerHTML=`
+            <div class="noResults">
+                <h3>No country found</h3>
+                <p>Try another country name.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    list.forEach((country,index)=>{
+
+        const card=document.createElement("div");
+
+        card.className="countryCard";
+
+        card.innerHTML=`
+
+            <span class="flag">
+                ${country.flag}
+            </span>
+
+            <div class="countryName">
+                ${country.name}
+            </div>
+
+            <div class="countryExplore">
+                ${country.places.length} destinations
+            </div>
+
+            <div class="arrow">
+                →
+            </div>
+
+        `;
+
+        card.onclick=()=>{
+            openCountry(country);
+        };
+
+        countriesContainer.appendChild(card);
+
+    });
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+function searchCountries(){
+
+    const value =
+        document.getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const filtered =
+        countriesData.filter(country =>
+            country.name.toLowerCase().includes(value)
+        );
+
+    showCountries(filtered);
+}
+
+
+/* =========================================================
+   OPEN COUNTRY
+   ========================================================= */
+
+async function openCountry(country){
+
+    countrySection.style.display="none";
+
+    destinationSection.style.display="block";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    countryTitle.innerHTML =
+        `${country.flag} <span>${country.name}</span>`;
+
+    destinationGrid.innerHTML="";
+
+    loading.style.display="flex";
+
+    const cards=[];
+
+    country.places.forEach((place,index)=>{
+
+        const card=document.createElement("article");
+
+        card.className="destinationCard";
+
+        card.innerHTML=`
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Placeholder.svg/900px-Placeholder.svg.png"
+                alt="${place}"
+                loading="lazy"
+            >
+
+            <div class="destinationOverlay">
+
+                <div class="destinationNumber">
+                    DESTINATION ${String(index+1).padStart(2,"0")}
+                </div>
+
+                <div class="destinationName">
+                    ${place}
+                </div>
+
+                <div class="destinationLocation">
+                    ${country.name}
+                </div>
+
+            </div>
+        `;
+
+        destinationGrid.appendChild(card);
+
+        cards.push({
+            card,
+            place,
+            country:country.name
+        });
+
+    });
+
+    loading.style.display="none";
+
+    /*
+       Load images in parallel.
+       This is much faster than loading one image at a time.
+    */
+
+    await Promise.all(
+        cards.map(item =>
+            loadDestinationPhoto(
+                item.place,
+                item.country,
+                item.card
+            )
+        )
+    );
+}
+
+
+/* =========================================================
+   WIKIMEDIA PHOTO SEARCH
+   ========================================================= */
+
+async function loadDestinationPhoto(
+    place,
+    country,
+    card
+){
+
+    const image =
+        card.querySelector("img");
+
+    /*
+       Stronger query:
+       destination + country + travel
+       This helps avoid getting only generic
+       country photographs.
+    */
+
+    const queries = [
+
+        `"${place}" "${country}" travel`,
+
+        `"${place}" "${country}" landmark`,
+
+        `${place} ${country}`
+
+    ];
+
+    for(const query of queries){
+
+        try{
+
+            const api =
+                "https://commons.wikimedia.org/w/api.php" +
+
+                "?action=query" +
+
+                "&generator=search" +
+
+                "&gsrsearch=" +
+                encodeURIComponent(query) +
+
+                "&gsrnamespace=6" +
+
+                "&gsrlimit=20" +
+
+                "&prop=imageinfo" +
+
+                "&iiprop=url" +
+
+                "&iiurlwidth=1000" +
+
+                "&format=json" +
+
+                "&origin=*";
+
+            const response =
+                await fetch(api);
+
+            const data =
+                await response.json();
+
+            const pages =
+                data.query &&
+                data.query.pages
+                ? Object.values(data.query.pages)
+                : [];
+
+            /*
+               Try to find a real image file.
+            */
+
+            const valid =
+                pages.find(page => {
+
+                    const info =
+                        page.imageinfo &&
+                        page.imageinfo[0];
+
+                    if(!info) return false;
+
+                    const url =
+                        info.thumburl ||
+                        info.url ||
+                        "";
+
+                    const lower =
+                        url.toLowerCase();
+
+                    return (
+                        lower.includes(".jpg") ||
+                        lower.includes(".jpeg") ||
+                        lower.includes(".png") ||
+                        lower.includes(".webp")
+                    );
+
+                });
+
+            if(valid){
+
+                const info =
+                    valid.imageinfo[0];
+
+                const imageURL =
+                    info.thumburl ||
+                    info.url;
+
+                image.src=imageURL;
+
+                return;
+            }
+
+        }catch(error){
+
+            console.log(
+                "Image search failed:",
+                place,
+                error
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+function backToCountries(){
+
+    destinationSection.style.display="none";
+
+    countrySection.style.display="block";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+document.getElementById("countryCount")
+    .textContent =
+    countriesData.length + "+";
+
+showCountries(countriesData);
+
+
+/* =========================================================
+   KEYBOARD SHORTCUT
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "/" &&
+           document.activeElement.tagName !== "INPUT"){
+
+            event.preventDefault();
+
+            document.getElementById("search").focus();
+
+        }
+
+        if(event.key === "Escape"){
+
+            document.getElementById("search").value="";
+
+            showCountries(countriesData);
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
